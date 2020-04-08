@@ -17,7 +17,14 @@ namespace SalesAPI.Models
         /// </summary>
         [Required]
         public string CustomerName { get; set; }
+        /// <summary>
+        /// Customer category ID
+        /// </summary>
+        [Required]
         public int CustomerCategoryID { get; set; }
+        /// <summary>
+        /// Valid date end. Default is maximum date value
+        /// </summary>
         public DateTime ValidTo { get; set; }
 
     }

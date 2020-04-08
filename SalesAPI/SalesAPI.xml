@@ -4,6 +4,20 @@
         <name>SalesAPI</name>
     </assembly>
     <members>
+        <member name="M:SalesAPI.Controllers.CustomersController.ListCustomers(SalesAPI.Models.ListCustomersRequest)">
+            <summary>
+            Get a paginated list of customers using optional search criteria.
+            </summary>
+            <param name="request">Request parameters</param>
+            <returns>Paging information and list of customers</returns>
+        </member>
+        <member name="M:SalesAPI.Controllers.CustomersController.GetCustomer(System.Int32)">
+            <summary>
+            Retreive a customer details using its identifier
+            </summary>
+            <param name="customerId"></param>
+            <returns>Detailed customer</returns>
+        </member>
         <member name="P:SalesAPI.Models.CustomerDetailDto.CustomerID">
             <summary>
             Primary key of the customer
@@ -27,6 +41,16 @@
         <member name="P:SalesAPI.Models.ListCustomersRequest.Name">
             <summary>
             Name of the customer to search. null for all customers
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.ListCustomersRequest.PageSize">
+            <summary>
+            Requested page size, ie number of items per page.
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.ListCustomersRequest.PageToken">
+            <summary>
+            Desired page token. Default is 0
             </summary>
         </member>
     </members>

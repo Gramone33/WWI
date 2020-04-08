@@ -20,7 +20,12 @@ namespace SalesAPI.Controllers
             _logger = logger;
             _repo = repo;
         }
-        private const int DefaultPageSize = 10;
+        
+        /// <summary>
+        /// Get a paginated list of customers using optional search criteria.
+        /// </summary>
+        /// <param name="request">Request parameters</param>
+        /// <returns>Paging information and list of customers</returns>
         [HttpGet]
         public ActionResult<ListCustomersResponse> ListCustomers([FromQuery] ListCustomersRequest request)
         {
@@ -63,10 +68,13 @@ namespace SalesAPI.Controllers
                 result.NextPage = $"/customers?Name={request.Name}&PageSize={request.PageSize}&PageToken={request.PageToken + 1}";
             }
             return result;
-
         }
 
-
+        /// <summary>
+        /// Retreive a customer details using its identifier
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns>Detailed customer</returns>
         [HttpGet("{customerId}")]
         public ActionResult<CustomerDetailDto> GetCustomer(int customerId)
         {
