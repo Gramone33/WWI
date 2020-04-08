@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesAPI.Models
 {
-    public class Customer
+    public class CustomerDetailDto
     {
         /// <summary>
         /// Primary key of the customer

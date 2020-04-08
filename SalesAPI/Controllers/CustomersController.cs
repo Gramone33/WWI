@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SalesAPI.Models;
 
 namespace SalesAPI.Controllers
 {
-    [Produces("application/json")]
     [ApiController]
     [Route("[controller]")]
     public class CustomersController : ControllerBase
@@ -22,36 +20,34 @@ namespace SalesAPI.Controllers
             _logger = logger;
             _repo = repo;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        private const int DefaultPageSize = 10;
         [HttpGet]
-        public IEnumerable<Customer> ListCustomers([FromQuery] string name)
+        public ListCustomersResponse ListCustomers([FromQuery] ListCustomersRequest request)
         {
-            if(name!=null)
-            { 
-                return _repo.SearchCustomers(name);
+            var result = new ListCustomersResponse();
+
+            if (request != null)
+            {
+                var keyword = request.Name;                
+                var customers = _repo.SearchCustomers(keyword);
+
+                // TODO : Pagination avec Linq
+                result.Customers = customers;
+                result.NextPage = $"/customers?Name={request.Name}&PageSize={request.PageSize}&PageToken=1";
+                return result;
             }
             else
             {
-                return _repo.ListCustomers();
+                // TODO : Pagination avec Linq
+                result.Customers = _repo.ListCustomers();
+                result.NextPage = $"/customers?Name=null&PageSize={DefaultPageSize}&PageToken=1";
+                return result;
             }
         }
+            
 
-        /// <summary>
-        /// Retreive a customer from its identifier / primary key.
-        /// </summary>
-        /// <param name="customerId">Id of the customer to look for.</param>
-        /// <returns>The customer found or 404 else.</returns>
-        /// <response code="200">Customer found with given Id</response>
-        /// <response code="404">No customer found with this identifier</response>
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{customerId}")]
-        public ActionResult<Customer> GetCustomer(int customerId)
+        public ActionResult<CustomerDetailDto> GetCustomer(int customerId)
         {
             var result = _repo.GetCustomer(customerId);
 
