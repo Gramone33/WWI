@@ -22,29 +22,50 @@ namespace SalesAPI.Controllers
         }
         private const int DefaultPageSize = 10;
         [HttpGet]
-        public ListCustomersResponse ListCustomers([FromQuery] ListCustomersRequest request)
+        public ActionResult<ListCustomersResponse> ListCustomers([FromQuery] ListCustomersRequest request)
         {
-            var result = new ListCustomersResponse();
-
-            if (request != null)
+            if (request == null)
             {
-                var keyword = request.Name;                
-                var customers = _repo.SearchCustomers(keyword);
-
-                // TODO : Pagination avec Linq
-                result.Customers = customers;
-                result.NextPage = $"/customers?Name={request.Name}&PageSize={request.PageSize}&PageToken=1";
-                return result;
+                request = new ListCustomersRequest();
+            }
+            if(request.PageSize < 1 || ListCustomersRequest.MaxPageSize < request.PageSize)
+            {
+                return BadRequest("Bad PageSize");
+            }
+            if (request.PageToken < 0)
+            {
+                return BadRequest("Bad PageToken");
+            }
+            var result = new ListCustomersResponse();
+            
+            if(request.Name !=null)
+            {
+                result.Customers = _repo.SearchCustomers(request.Name);
             }
             else
             {
-                // TODO : Pagination avec Linq
                 result.Customers = _repo.ListCustomers();
-                result.NextPage = $"/customers?Name=null&PageSize={DefaultPageSize}&PageToken=1";
-                return result;
             }
+            var count = result.Customers.Count();
+            var pagenum = (count + request.PageSize - 1) / request.PageSize;
+
+            if(request.PageToken>=pagenum)
+            {
+                return BadRequest("PageToken exceeds page number");
+            }
+            result.Customers = result.Customers.Skip(request.PageToken * request.PageSize).Take(request.PageSize);
+            if(request.PageToken == pagenum)
+            {
+                result.NextPage = null;
+            }
+            else
+            {
+                result.NextPage = $"/customers?Name={request.Name}&PageSize={request.PageSize}&PageToken={request.PageToken + 1}";
+            }
+            return result;
+
         }
-            
+
 
         [HttpGet("{customerId}")]
         public ActionResult<CustomerDetailDto> GetCustomer(int customerId)
