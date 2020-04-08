@@ -39,40 +39,25 @@ namespace SalesAPI.Controllers
             {
                 request = new ListCustomersRequest();
             }
-            if(request.PageSize < 1 || ListCustomersRequest.MaxPageSize < request.PageSize)
+            else
             {
-                return BadRequest("Bad PageSize");
-            }
-            if (request.PageToken < 0)
-            {
-                return BadRequest("Bad PageToken");
+                if (request.PageSize < 1 || ListCustomersRequest.MaxPageSize < request.PageSize)
+                {
+                    return BadRequest("Bad PageSize");
+                }
+                if (request.PageToken < 0)
+                {
+                    return BadRequest("Bad PageToken");
+                }
             }
             var result = new ListCustomersResponse();
             
-            if(request.Name !=null)
-            {
-                result.Customers = _repo.SearchCustomers(request.Name);
-            }
-            else
-            {
-                result.Customers = _repo.ListCustomers();
-            }
-            var count = result.Customers.Count();
-            var pagenum = (count + request.PageSize - 1) / request.PageSize;
-
-            if(request.PageToken>=pagenum)
-            {
-                return BadRequest("PageToken exceeds page number");
-            }
-            result.Customers = result.Customers.Skip(request.PageToken * request.PageSize).Take(request.PageSize);
-            if(request.PageToken == pagenum)
-            {
-                result.NextPage = null;
-            }
-            else
-            {
-                result.NextPage = $"/customers?Name={request.Name}&PageSize={request.PageSize}&PageToken={request.PageToken + 1}";
-            }
+            result.Customers = request.Name == null
+                ? _repo.ListCustomers(request.PageToken, request.PageSize)
+                : _repo.SearchCustomers(request.Name, request.PageToken, request.PageSize);
+            result.NextPage = result.Customers.Any()
+                ? $"/customers?Name={request.Name}&PageSize={request.PageSize}&PageToken={request.PageToken + 1}"
+                : null;
             return result;
         }
 

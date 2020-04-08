@@ -7,8 +7,8 @@ namespace SalesAPI.Models
 {
     public interface ICustomerRepository : IDisposable
     {
-        IEnumerable<CustomerDto> ListCustomers();
-        IEnumerable<CustomerDto> SearchCustomers(string keyword);
+        IEnumerable<CustomerDto> ListCustomers(int pageNum, int pageSize);
+        IEnumerable<CustomerDto> SearchCustomers(string keyword, int pageNum, int pageSize);
         CustomerDetailDto GetCustomer(int customerId);
     }
 }

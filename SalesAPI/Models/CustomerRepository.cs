@@ -19,7 +19,8 @@ namespace SalesAPI.Models
         private const string SelectCustomers =
             @"SELECT
                     CustomerID, CustomerName, CustomerCategoryID, ValidTo
-              FROM Sales.Customers ";
+              FROM Sales.Customers";
+        private const string Paging = "ORDER BY CustomerId OFFSET @PageNum * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY";
 
         public CustomerRepository(string connectionString) =>
             _db = new SqlConnection(connectionString);
@@ -34,13 +35,13 @@ namespace SalesAPI.Models
                 new { Id = customerId }
             );
 
-        public IEnumerable<CustomerDto> ListCustomers() =>
-            _db.Query<CustomerDto>(SelectCustomers);
+        public IEnumerable<CustomerDto> ListCustomers(int pageNum, int pageSize) =>
+            _db.Query<CustomerDto>($"{ SelectCustomers } { Paging }", new { PageNum = pageNum, PageSize=pageSize });
 
-        public IEnumerable<CustomerDto> SearchCustomers(string keyword) => 
+        public IEnumerable<CustomerDto> SearchCustomers(string keyword, int pageNum, int pageSize) => 
             _db.Query<CustomerDto>(
-                $"{SelectCustomers} WHERE CustomerName LIKE @Search",
-                new { Search=$"{keyword}%" }
+                $"{SelectCustomers} WHERE CustomerName LIKE @Search { Paging }",
+                new { PageNum = pageNum, PageSize = pageSize, Search=$"{keyword}%" }
             );
     }
 }
