@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SalesAPI</name>
+    </assembly>
+    <members>
+        <member name="M:SalesAPI.Controllers.CustomersController.ListCustomers(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SalesAPI.Controllers.CustomersController.GetCustomer(System.Int32)">
+            <summary>
+            Retreive a customer from its identifier / primary key.
+            </summary>
+            <param name="customerId">Id of the customer to look for.</param>
+            <returns>The customer found or 404 else.</returns>
+            <response code="200">Customer found with given Id</response>
+            <response code="404">No customer found with this identifier</response>
+        </member>
+        <member name="P:SalesAPI.Models.Customer.CustomerID">
+            <summary>
+            Primary key of the customer
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.Customer.CustomerName">
+            <summary>
+            Name of the customer
+            </summary>
+        </member>
+    </members>
+</doc>

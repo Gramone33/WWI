@@ -1,10 +1,18 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesAPI.Models
 {
     public class Customer
     {
+        /// <summary>
+        /// Primary key of the customer
+        /// </summary>
         public int CustomerID { get; set; }
+        /// <summary>
+        /// Name of the customer
+        /// </summary>
+        [Required]
         public string CustomerName { get; set; }
         public int BillToCustomerID { get; set; }
         public int CustomerCategoryID { get; set; }
