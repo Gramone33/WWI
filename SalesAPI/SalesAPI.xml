@@ -10,6 +10,8 @@
             </summary>
             <param name="request">Request parameters</param>
             <returns>Paging information and list of customers</returns>
+            <response code="200">Request successfully processed</response>
+            <response code="400">Error in the request parameters</response>
         </member>
         <member name="M:SalesAPI.Controllers.CustomersController.GetCustomer(System.Int32)">
             <summary>
@@ -17,6 +19,8 @@
             </summary>
             <param name="customerId"></param>
             <returns>Detailed customer</returns>
+            <response code="200">Customer with the given ID found</response>
+            <response code="404">No customer with the given ID found</response>
         </member>
         <member name="P:SalesAPI.Models.CustomerDetailDto.CustomerID">
             <summary>
@@ -26,6 +30,146 @@
         <member name="P:SalesAPI.Models.CustomerDetailDto.CustomerName">
             <summary>
             Name of the customer
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.BillToCustomerID">
+            <summary>
+            Bill identifier
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.CustomerCategoryID">
+            <summary>
+            Customer Category identifier
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.BuyingGroupID">
+            <summary>
+            Buying group identifier
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.PrimaryContactPersonID">
+            <summary>
+            Identifier of the primary contact
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.AlternateContactPersonID">
+            <summary>
+            Identifier of the alternate contact
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.DeliveryMethodID">
+            <summary>
+            Identifier of the delivery method
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.DeliveryCityID">
+            <summary>
+            Identifier of the delivery city
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.PostalCityID">
+            <summary>
+            Identifier of the postal city
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.CreditLimit">
+            <summary>
+            Credit limit
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.AccountOpenedDate">
+            <summary>
+            Date of the account opening
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.StandardDiscountPercentage">
+            <summary>
+            Percentage of the standard discount for this customer
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.IsStatementSent">
+            <summary>
+            Get if a statement was sent
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.IsOnCreditHold">
+            <summary>
+            Get if the customer is on a credit hold
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.PaymentDays">
+            <summary>
+            Number of day for payments
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.PhoneNumber">
+            <summary>
+            Main phone number
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.FaxNumber">
+            <summary>
+            Main fax number
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.DeliveryRun">
+            <summary>
+            Delivery run
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.RunPosition">
+            <summary>
+            Run position
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.WebsiteURL">
+            <summary>
+            Customer website url
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.DeliveryAddressLine1">
+            <summary>
+            Address line 2 for deliveries
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.DeliveryAddressLine2">
+            <summary>
+            Address line 1 for deliveries
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.DeliveryPostalCode">
+            <summary>
+            Postal code for deliveries
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.PostalAddressLine1">
+            <summary>
+            Postal address, line 1 for mails
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.PostalAddressLine2">
+            <summary>
+            Postal address, line 1 for mails
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.PostalPostalCode">
+            <summary>
+            Postal code for mails
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.LastEditedBy">
+            <summary>
+            Date of last edit
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.ValidFrom">
+            <summary>
+            Valid date start, default is maximum date value
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDetailDto.ValidTo">
+            <summary>
+            Valid date end, default is maximum date value
             </summary>
         </member>
         <member name="P:SalesAPI.Models.CustomerDto.CustomerID">
@@ -38,6 +182,16 @@
             Name of the customer
             </summary>
         </member>
+        <member name="P:SalesAPI.Models.CustomerDto.CustomerCategoryID">
+            <summary>
+            Customer category ID
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.CustomerDto.ValidTo">
+            <summary>
+            Valid date end. Default is maximum date value
+            </summary>
+        </member>
         <member name="P:SalesAPI.Models.ListCustomersRequest.Name">
             <summary>
             Name of the customer to search. null for all customers
@@ -45,12 +199,22 @@
         </member>
         <member name="P:SalesAPI.Models.ListCustomersRequest.PageSize">
             <summary>
-            Requested page size, ie number of items per page.
+            Requested page size, ie number of items per page. From 1 to 50. Default is 10.
             </summary>
         </member>
         <member name="P:SalesAPI.Models.ListCustomersRequest.PageToken">
             <summary>
             Desired page token. Default is 0
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.ListCustomersResponse.Customers">
+            <summary>
+            List of customers
+            </summary>
+        </member>
+        <member name="P:SalesAPI.Models.ListCustomersResponse.NextPage">
+            <summary>
+            Link to next customer result page
             </summary>
         </member>
     </members>
