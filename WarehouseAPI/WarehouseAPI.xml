@@ -49,6 +49,36 @@
             Last editing date time
             </summary>
         </member>
+        <member name="P:WarehouseAPI.Models.ListHoldingsResponse.Holdings">
+            <summary>
+            List of stock item holdings found
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.ListHoldingsResponse.NextPage">
+            <summary>
+            Next page of result, null if none
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.ListStockItemsResponse.StockItems">
+            <summary>
+            List of stock items found
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.ListStockItemsResponse.NextPage">
+            <summary>
+            Next page of result, null if none
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.ListStockRequest.PageToken">
+            <summary>
+            Page id, zero starting index less than PageSize
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.ListStockRequest.PageSize">
+            <summary>
+            Required number of item per page. 1 to 50
+            </summary>
+        </member>
         <member name="P:WarehouseAPI.Models.StockItemDto.StockItemID">
             <summary>
             Priary Key of the stock item
