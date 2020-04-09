@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WarehouseAPI</name>
+    </assembly>
+    <members>
+        <member name="P:WarehouseAPI.Models.HoldingDto.StockItemID">
+            <summary>
+            Primary key for Stock Item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.QuantityOnHand">
+            <summary>
+            Actual quantity of the item (SKU)
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.BinLocation">
+            <summary>
+            Location of the item in the warehouse
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.LastStocktakeQuantity">
+            <summary>
+            Stock take quantity. Stock taking results in a summary-level document that contains a list of the quantities on hand for every inventory item as of a specific point in time.
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.LastCostPrice">
+            <summary>
+            Last cost price of the item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.ReorderLevel">
+            <summary>
+            Level for reordering the item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.TargetStockLevel">
+            <summary>
+            Desired stock level for the item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.LastEditedBy">
+            <summary>
+            ID of the employee who last edited the stock item.
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.HoldingDto.LastEditedWhen">
+            <summary>
+            Last editing date time
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.StockItemDto.StockItemID">
+            <summary>
+            Priary Key of the stock item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.StockItemDto.StockItemName">
+            <summary>
+            Stock item name
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.StockItemDto.SupplierID">
+            <summary>
+            ID of the supplier for this Stock Item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.StockItemDto.ColorID">
+            <summary>
+            ID of the color for the stock item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.StockItemDto.ColorName">
+            <summary>
+            Color name of the stock item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.StockItemDto.Brand">
+            <summary>
+            Brand of the stock item
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.StockItemDto.Barcode">
+            <summary>
+            Bar code of the stock item. null if undefined
+            </summary>
+        </member>
+    </members>
+</doc>
