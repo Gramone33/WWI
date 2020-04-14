@@ -4,6 +4,27 @@
         <name>WarehouseAPI</name>
     </assembly>
     <members>
+        <member name="M:WarehouseAPI.Controllers.StockItemsController.ListStockItems(System.Int32,WarehouseAPI.Models.ListStockRequest)">
+            <summary>
+            List of the stock items for a given supplier
+            </summary>
+            <param name="supplierID">Identifier of the supplier whose stock items are to be retreived</param>
+            <param name="request">Paging parameters for the request</param>
+            <returns>Stock items response</returns>
+            <response code="200">Successfully retreived</response>
+            <response code="400">Bad pagin parameters</response>
+        </member>
+        <member name="M:WarehouseAPI.Controllers.StockItemsController.ListHoldings(System.Int32,System.Int32,WarehouseAPI.Models.ListStockRequest)">
+            <summary>
+            List of the holdings for a given stock items for a given supplier
+            </summary>
+            <param name="supplierID">Supplier id</param>
+            <param name="stockItemID">Stock item whose holdings is to be retreived</param>
+            <param name="request">Paging parameters for the request</param>
+            <returns>Stock item holdings response</returns>
+            <response code="200">Succesfully retreived</response>
+            <response code="400">Bad pagin parameters</response>
+        </member>
         <member name="P:WarehouseAPI.Models.HoldingDto.StockItemID">
             <summary>
             Primary key for Stock Item

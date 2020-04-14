@@ -56,7 +56,7 @@ namespace WarehouseAPI.Controllers
         /// <returns>Stock item holdings response</returns>
         /// <response code="200">Succesfully retreived</response>
         /// <response code="400">Bad pagin parameters</response>
-        [HttpGet("{supplierID}/[controller]/{stockItemID}/holdings")]
+        [HttpGet("/[controller]/{stockItemID}/holdings")]
         public ActionResult<ListHoldingsResponse> ListHoldings(int supplierID, int stockItemID, [FromQuery] ListStockRequest request)
         {
             if (request.IsValid())

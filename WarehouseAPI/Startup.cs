@@ -32,6 +32,9 @@ namespace WarehouseAPI
             services.AddTransient<IStockRepository>(s => new StockRepository(
                 Configuration.GetConnectionString("WideWorldImporters")
             ));
+            services.AddTransient<ITransactionsRepository>(s => new TransactionsRepository(
+                Configuration.GetConnectionString("WideWorldImporters")
+            ));
             services.AddControllers();
             services.AddSwaggerGen(
                 c => {
