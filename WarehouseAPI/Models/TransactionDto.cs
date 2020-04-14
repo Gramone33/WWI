@@ -7,6 +7,12 @@ namespace WarehouseAPI.Models
 {
     public class TransactionDto
     {
+        public enum Types
+        {
+            StockIssue = 10,
+            StockReceipt,
+            StockAdjust
+        }
         public int? StockItemTransactionID { get; set; }
         public int StockItemID { get; set; }
         public int TransactionTypeID { get; set; }
