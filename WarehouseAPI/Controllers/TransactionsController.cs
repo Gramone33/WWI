@@ -20,6 +20,16 @@ namespace WarehouseAPI.Controllers
             _repo = repo;
         }
 
+        /// <summary>
+        /// Register a transaction on a stock item in the warehouse. Can be either an issue, a receipt or a adjustment
+        /// </summary>
+        /// <param name="stockItemID">ID of the stock item being added or removed from the stock</param>
+        /// <param name="newTransaction">Transaction about to be created</param>
+        /// <returns>The transaction created with its identifier correctly affected by the API</returns>
+        /// <response code="201">Transaction succesfully stored</response>
+        /// <response code="400">Bad request, can be TransactionTypeID</response>
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost("{stockItemID}/[controller]")]
         public ActionResult<TransactionDto> CreateTransaction(int stockItemID, [FromBody] TransactionDto newTransaction)
         {
