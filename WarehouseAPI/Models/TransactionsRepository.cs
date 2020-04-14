@@ -25,6 +25,38 @@ namespace WarehouseAPI.Models
             {
                 throw new ArgumentOutOfRangeException("Type must be 10: issue, 11: receipt or 12: adjust");
             }
+            switch((TransactionDto.Types)newTransaction.TransactionTypeID)
+            {
+                case TransactionDto.Types.StockIssue:
+                    if(newTransaction.Quantity >= 0m)
+                    {
+                        throw new ArgumentOutOfRangeException("Quantity must be negative for stock issue");
+                    }
+                    break;
+                case TransactionDto.Types.StockReceipt:
+                    if (newTransaction.Quantity <= 0m)
+                    {
+                        throw new ArgumentOutOfRangeException("Quantity must be positive for stock receipt");
+                    }
+                    break;
+                case TransactionDto.Types.StockAdjust:
+                    break;
+            }
+            if(newTransaction.Quantity<0)
+            {
+                var actualQty = _db.QuerySingle<int>(
+                    "SELECT QuantityOnHand FROM Warehouse.StockItemHoldings WHERE StockItemID=@StockItemID",
+                    newTransaction
+                );
+                if(actualQty<newTransaction.Quantity)
+                {
+                    throw new ArgumentOutOfRangeException("Quantity is higher than the actual stock on hand");
+                }
+                var n = _db.Execute(
+                    "UPDATE Warehouse.StockItemHoldings SET QuantityOnHand = QuantityOnHand + CAST(@Quantity AS INT) WHERE StockItemID=@StockItemID",
+                    newTransaction
+                );
+            }
             var id = _db.QuerySingle<int>(InsertTransaction, newTransaction);
             newTransaction.StockItemTransactionID = id;
             return newTransaction;

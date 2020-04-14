@@ -25,6 +25,16 @@
             <response code="200">Succesfully retreived</response>
             <response code="400">Bad pagin parameters</response>
         </member>
+        <member name="M:WarehouseAPI.Controllers.TransactionsController.CreateTransaction(System.Int32,WarehouseAPI.Models.TransactionDto)">
+            <summary>
+            Register a transaction on a stock item in the warehouse. Can be either an issue, a receipt or a adjustment
+            </summary>
+            <param name="stockItemID">ID of the stock item being added or removed from the stock</param>
+            <param name="newTransaction">Transaction about to be created</param>
+            <returns>The transaction created with its identifier correctly affected by the API</returns>
+            <response code="201">Transaction succesfully stored</response>
+            <response code="400">Bad request, can be TransactionTypeID</response>
+        </member>
         <member name="P:WarehouseAPI.Models.HoldingDto.StockItemID">
             <summary>
             Primary key for Stock Item
@@ -133,6 +143,61 @@
         <member name="P:WarehouseAPI.Models.StockItemDto.Barcode">
             <summary>
             Bar code of the stock item. null if undefined
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.StockItemTransactionID">
+            <summary>
+            Transaction identifier
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.StockItemID">
+            <summary>
+            Stock item identifier
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.TransactionTypeID">
+            <summary>
+            Transaction ID, can be 10: stock issue, 11: stock receipt or 12 for stock adjustment
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.CustomerID">
+            <summary>
+            Optional customer id linked to this stock transactions
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.InvoiceID">
+            <summary>
+            Optional invoice id linked to this stock transactions
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.SupplierID">
+            <summary>
+            Optional supplier id linked to this stock transactions
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.PurchaseOrderID">
+            <summary>
+            Optional purchase id linked to this stock transactions
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.TransactionOccurredWhen">
+            <summary>
+            Time when the transaction actually occured
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.Quantity">
+            <summary>
+            Quantity being added or removed from the warehouse
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.LastEditedBy">
+            <summary>
+            Id of the person editing this transaction
+            </summary>
+        </member>
+        <member name="P:WarehouseAPI.Models.TransactionDto.LastEditedWhen">
+            <summary>
+            Last edition date time of this transaction
             </summary>
         </member>
     </members>
