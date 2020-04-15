@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,10 +21,12 @@ namespace WarehouseAPI.Models
         /// <summary>
         /// Stock item identifier
         /// </summary>
+        [Required]
         public int StockItemID { get; set; }
         /// <summary>
         /// Transaction ID, can be 10: stock issue, 11: stock receipt or 12 for stock adjustment
         /// </summary>
+        [Required]
         public int TransactionTypeID { get; set; }
         /// <summary>
         /// Optional customer id linked to this stock transactions
@@ -48,6 +51,7 @@ namespace WarehouseAPI.Models
         /// <summary>
         /// Quantity being added or removed from the warehouse
         /// </summary>
+        [Required]
         public decimal Quantity { get; set; }
         /// <summary>
         /// Id of the person editing this transaction

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace WarehouseAPI.Models
@@ -18,6 +19,9 @@ namespace WarehouseAPI.Models
         {
             _db = new SqlConnection(connectionString);
         }
+
+        public void Dispose() => _db.Dispose();
+
         public TransactionDto CreateTransaction(TransactionDto newTransaction)
         {
             if(newTransaction.TransactionTypeID<(int)TransactionDto.Types.StockIssue 
@@ -42,27 +46,46 @@ namespace WarehouseAPI.Models
                 case TransactionDto.Types.StockAdjust:
                     break;
             }
-            if(newTransaction.Quantity<0)
+            if (_db.State != ConnectionState.Open)
             {
-                var actualQty = _db.QuerySingle<int>(
-                    "SELECT QuantityOnHand FROM Warehouse.StockItemHoldings WHERE StockItemID=@StockItemID",
-                    newTransaction
-                );
-                if(actualQty<newTransaction.Quantity)
-                {
-                    throw new ArgumentOutOfRangeException("Quantity is higher than the actual stock on hand");
-                }
-                var n = _db.Execute(
-                    "UPDATE Warehouse.StockItemHoldings SET QuantityOnHand = QuantityOnHand + CAST(@Quantity AS INT) WHERE StockItemID=@StockItemID",
-                    newTransaction
-                );
+                _db.Open();
             }
-            var id = _db.QuerySingle<int>(InsertTransaction, newTransaction);
-            newTransaction.StockItemTransactionID = id;
-            return newTransaction;
-        }
-            
-
-        public void Dispose() => _db.Dispose();
+            using(var dbTrans = _db.BeginTransaction())
+            {
+                try
+                {
+                    if (newTransaction.Quantity < 0)
+                    {
+                        var actualQty = _db.QuerySingle<int>(
+                            "SELECT QuantityOnHand FROM Warehouse.StockItemHoldings WHERE StockItemID=@StockItemID",
+                            newTransaction,
+                            dbTrans
+                        );
+                        if (actualQty < newTransaction.Quantity)
+                        {
+                            throw new ArgumentOutOfRangeException("Quantity is higher than the actual stock on hand");
+                        }
+                        var n = _db.Execute(
+                            "UPDATE Warehouse.StockItemHoldings SET QuantityOnHand = QuantityOnHand + CAST(@Quantity AS INT) WHERE StockItemID=@StockItemID",
+                            newTransaction,
+                            dbTrans
+                        );
+                        if(n == 0)
+                        {
+                            throw new InvalidOperationException("Unable to update stock qantity");
+                        }
+                    }
+                    var id = _db.QuerySingle<int>(InsertTransaction, newTransaction, dbTrans);
+                    newTransaction.StockItemTransactionID = id;
+                    dbTrans.Commit();
+                    return newTransaction;
+                }
+                catch(Exception e)
+                {
+                    dbTrans.Rollback();
+                    throw;
+                }
+            }
+        }        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -38,7 +39,7 @@ namespace WarehouseAPI.Controllers
 
                 response.StockItems = _repo.ListStockItems(supplierID, request.PageToken, request.PageSize);
                 response.NextPage = response.StockItems.Count() == request.PageSize
-                    ? $"/suppliers/{supplierID}/stockitems?pageToken={request.PageToken+1}&pageSize={request.PageSize}"
+                    ? $"{Request.Scheme}://{Request.Host}{Request.Path}?pageToken={request.PageToken+1}&pageSize={request.PageSize}"
                     : null;
                 return response;
             }
@@ -50,14 +51,13 @@ namespace WarehouseAPI.Controllers
         /// <summary>
         /// List of the holdings for a given stock items for a given supplier
         /// </summary>
-        /// <param name="supplierID">Supplier id</param>
         /// <param name="stockItemID">Stock item whose holdings is to be retreived</param>
         /// <param name="request">Paging parameters for the request</param>
         /// <returns>Stock item holdings response</returns>
         /// <response code="200">Succesfully retreived</response>
         /// <response code="400">Bad pagin parameters</response>
         [HttpGet("/[controller]/{stockItemID}/holdings")]
-        public ActionResult<ListHoldingsResponse> ListHoldings(int supplierID, int stockItemID, [FromQuery] ListStockRequest request)
+        public ActionResult<ListHoldingsResponse> ListHoldings(int stockItemID, [FromQuery] ListStockRequest request)
         {
             if (request.IsValid())
             {
@@ -65,7 +65,7 @@ namespace WarehouseAPI.Controllers
 
                 response.Holdings = _repo.ListHoldings(stockItemID, request.PageToken, request.PageSize);
                 response.NextPage = response.Holdings.Count() == request.PageSize
-                    ? $"/suppliers/{supplierID}/stockitems?pageToken={request.PageToken + 1}&pageSize={request.PageSize}"
+                    ? $"{Request.Scheme}://{Request.Host}{Request.Path}?pageToken={request.PageToken + 1}&pageSize={request.PageSize}"
                     : null;
                 return response;
             }

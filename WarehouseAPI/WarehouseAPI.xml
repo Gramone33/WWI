@@ -14,11 +14,10 @@
             <response code="200">Successfully retreived</response>
             <response code="400">Bad pagin parameters</response>
         </member>
-        <member name="M:WarehouseAPI.Controllers.StockItemsController.ListHoldings(System.Int32,System.Int32,WarehouseAPI.Models.ListStockRequest)">
+        <member name="M:WarehouseAPI.Controllers.StockItemsController.ListHoldings(System.Int32,WarehouseAPI.Models.ListStockRequest)">
             <summary>
             List of the holdings for a given stock items for a given supplier
             </summary>
-            <param name="supplierID">Supplier id</param>
             <param name="stockItemID">Stock item whose holdings is to be retreived</param>
             <param name="request">Paging parameters for the request</param>
             <returns>Stock item holdings response</returns>

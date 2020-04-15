@@ -33,9 +33,12 @@ namespace WarehouseAPI.Controllers
         [HttpPost("{stockItemID}/[controller]")]
         public ActionResult<TransactionDto> CreateTransaction(int stockItemID, [FromBody] TransactionDto newTransaction)
         {
+            if(newTransaction.StockItemID != stockItemID)
+            {
+                return BadRequest("Inconsistent stock item ID");
+            }
             try
             {
-                newTransaction.StockItemID = stockItemID;
                 newTransaction.LastEditedBy = 1; // TODO : Get current user ID
                 newTransaction.LastEditedWhen = DateTime.Now;
                 newTransaction.SupplierID = null;
@@ -45,11 +48,15 @@ namespace WarehouseAPI.Controllers
                 var createTransaction = _repo.CreateTransaction(newTransaction);
 
                 return Created(
-                    $"/stockitems/{stockItemID}/[controller]/{createTransaction.StockItemTransactionID}",
+                    $"{Request.Scheme}://{Request.Host}{Request.Path}/{newTransaction.StockItemTransactionID}",
                     createTransaction
                 );
             }
-            catch(ArgumentOutOfRangeException e)
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (ArgumentOutOfRangeException e)
             {
                 return BadRequest(e.Message);
             }

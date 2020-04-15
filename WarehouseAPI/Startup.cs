@@ -40,7 +40,7 @@ namespace WarehouseAPI
                 c => {
                     c.SwaggerDoc("v1", new OpenApiInfo
                     {
-                        Title = "SalesAPI",
+                        Title = "WarehouseAPI",
                         Version = "v1"
                     });
                     c.IncludeXmlComments(Path.Combine(
