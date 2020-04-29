@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAPI", "SalesAPI\SalesA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseAPI", "WarehouseAPI\WarehouseAPI.csproj", "{BA7B60E2-1DB1-4D55-8229-B3FBF27695C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAPITest", "WarehouseAPITest\WarehouseAPITest.csproj", "{3018619D-6F01-4501-9241-53181A16A1CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseAPITest", "WarehouseAPITest\WarehouseAPITest.csproj", "{3018619D-6F01-4501-9241-53181A16A1CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
