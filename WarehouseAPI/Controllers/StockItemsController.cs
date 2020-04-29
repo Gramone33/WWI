@@ -65,7 +65,7 @@ namespace WarehouseAPI.Controllers
 
                 response.Holdings = _repo.ListHoldings(stockItemID, request.PageToken, request.PageSize);
                 response.NextPage = response.Holdings.Count() == request.PageSize
-                    ? $"{Request.Scheme}://{Request.Host}{Request.Path}?pageToken={request.PageToken + 1}&pageSize={request.PageSize}"
+                    ? $"{Request.Scheme}://{Request.Host}{Request.Path}/stockitems/{stockItemID}/holdings?pageToken={request.PageToken + 1}&pageSize={request.PageSize}"
                     : null;
                 return response;
             }
